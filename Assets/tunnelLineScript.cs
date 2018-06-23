@@ -11,5 +11,9 @@ public class tunnelLineScript : MonoBehaviour {
 		else if (other.GetComponent<jamCar> () != null) {
 			other.GetComponent<MeshRenderer> ().enabled = false;
 		}
+		else if (other.GetComponent<emergencyCar> () != null) {
+			print ("emergency Car");
+			other.gameObject.SetActive(false);
+		}
 	}
 }

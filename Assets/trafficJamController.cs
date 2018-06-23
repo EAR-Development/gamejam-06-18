@@ -64,6 +64,11 @@ public class trafficJamController : MonoBehaviour {
 		nextangerlevel = Mathf.Min (1, Mathf.Max (0, nextangerlevel));
 	}
 
+	public void resetLevel(){
+		angerlevel = 0f;
+		nextangerlevel = 0f;
+	}
+
 	public void playerEnter(){
 		currentMode = Mode.playerinside;
 		emergency = GameObject.Instantiate (emergencyPrefab, emergencySpawn.transform.position, emergencySpawn.transform.rotation);

@@ -26,6 +26,8 @@ public class playerScript : MonoBehaviour {
 	private float currentSpeed =0;
 
 	public AudioSource source;
+	public AudioSource honksource;
+	public AudioClip honk;
 
     private GameObject pSpeed;
     private GameObject pMesser;
@@ -54,22 +56,27 @@ public class playerScript : MonoBehaviour {
 		if (isPlayerOne) {
 			playerButton = "player_1";
             pSpeed = GameObject.Find("player_1_speed");
+			angerOut = GameObject.Find("player_1_anger");
             pMesser = GameObject.Find("Messer_1");
-            angerOut = GameObject.Find("Messer_1");
         } else {
 			playerButton = "player_2";
             pSpeed = GameObject.Find("player_2_speed");
+			angerOut = GameObject.Find("player_2_anger");
             pMesser = GameObject.Find("Messer_2");
-            angerOut = GameObject.Find("Messer_2");
 
 
         }
+		pSpeed.SetActive(true);
+		pMesser.SetActive(true);
+		angerOut.SetActive(false);
+
         ZeitStopper = new Stopwatch();
         ZeitStopper.Start();
 
 		currentMode = Mode.drag;
 
 		source = GetComponentsInChildren<AudioSource>()[0];
+		honksource = GetComponentsInChildren<AudioSource>()[1];
 		source.Play ();
 		source.volume = .2f;
 
@@ -78,7 +85,8 @@ public class playerScript : MonoBehaviour {
     }
 
 	public void enterTrafficJam(){
-        pSpeed.SetActive(true);
+        pSpeed.SetActive(false);
+		pMesser.SetActive(true);
         angerOut.SetActive(true);
         currentMode = Mode.jam;
 		jamscript.playerEnter ();
@@ -124,14 +132,14 @@ public class playerScript : MonoBehaviour {
 			currentPosition.x = middleXPosition - offsetfunction (0, 0, 100, -2, 100-distance);
 			if (honked) {
 				honkNumber++;
-				print (honkNumber);
 			}
 		}
 		transform.position = currentPosition;
 
 		if (distance < 3 && honkNumber > 10) {
 			print ("You're a Honk");
-			honkNumber = 0;
+			jamscript.resetLevel ();
+			honkNumber = -5;
 		}
 	}
 
@@ -175,6 +183,7 @@ public class playerScript : MonoBehaviour {
 			if (Input.GetButtonDown (playerButton)) {
 				jamscript.honk ();
 				honked = true;
+				honksource.PlayOneShot (honk);
 			}
 			currentSpeed = jamscript.getJamSpeed ();
 			currentMotorPower = 0.2f;
@@ -204,5 +213,7 @@ public class playerScript : MonoBehaviour {
         {
             pixel = relPixel - 630;
         }
+
+		pMesser.GetComponent<RectTransform> ().anchoredPosition = new Vector2 (pixel, 50);
     }
 }
