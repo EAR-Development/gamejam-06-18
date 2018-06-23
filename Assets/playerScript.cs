@@ -12,6 +12,8 @@ public class playerScript : MonoBehaviour {
 
 	public enum Mode {start, drag, tunnel, jam, finish};
 
+	public trafficJamController jamscript;
+
 	public bool isPlayerOne = true;
 	private string playerButton;
     public GameObject drehzahlMesser;
@@ -43,10 +45,12 @@ public class playerScript : MonoBehaviour {
 
 	public void enterTrafficJam(){
 		currentMode = Mode.jam;
+		jamscript.playerEnter ();
 	}
 
 	public void enterTunnel(){
 		currentMode = Mode.tunnel;
+		jamscript.playerLeft ();
 	}
 
     public void stoptime()
@@ -93,16 +97,18 @@ public class playerScript : MonoBehaviour {
 
 			drehzahlMesser.GetComponent<RectTransform> ().anchoredPosition = new Vector2 (pixel, 50);
 
+			currentSpeed -= 0.005f;
+
 			// UPDATE POSITION OF UI PIN -> currentMotorPower
 		} else if (currentMode == Mode.tunnel) {
 			currentSpeed -= 0.05f;
 			currentSpeed = Mathf.Max (0, jamSpeed);
+		} else if (currentMode == Mode.jam) {
+			currentSpeed = jamscript.getJamSpeed ();
 		}
 
 		// Move Car
 		this.transform.Translate (Vector3.forward * currentSpeed);
-
-		currentSpeed -= 0.005f;
 		currentSpeed = Mathf.Max (0, currentSpeed);
 	}
 }
