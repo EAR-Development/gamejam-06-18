@@ -55,7 +55,17 @@ public class playerScript : MonoBehaviour {
 	}
 
 	public void enterTunnel(){
-		currentMode = Mode.tunnel;
+        if (isPlayerOne)
+        {
+            GameObject.Find("player_1_speed").SetActive(false);
+            GameObject.Find("Messer_1").SetActive(false);
+        }
+        else
+        {
+            GameObject.Find("player_2_speed").SetActive(false);
+            GameObject.Find("Messer_2").SetActive(false);
+        }
+        currentMode = Mode.tunnel;
 		jamscript.playerLeft ();
 	}
 

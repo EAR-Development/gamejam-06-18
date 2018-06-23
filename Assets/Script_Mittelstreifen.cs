@@ -7,7 +7,7 @@ public class Script_Mittelstreifen : MonoBehaviour {
     public GameObject Kurz;
 	// Use this for initialization
 	void Start () {
-        for ( int i = 0; i < 200; i++)
+        for ( int i = 0; i < 2000; i++)
         {
             GameObject Strich = Instantiate(Kurz, transform, true);
             Strich.transform.position = new Vector3(0, 1, i*3-20);
