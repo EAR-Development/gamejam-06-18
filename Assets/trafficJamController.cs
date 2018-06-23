@@ -12,6 +12,7 @@ public class trafficJamController : MonoBehaviour {
 	private float angerlevel = 0.1f;
 	private float nextangerlevel = 0.1f;
 
+	private float minSpeed = .1f;
 	private float maxSpeed = .5f;
 	private float endSpeed = 0.3f;
 	private float sweetSpot = 0.7f;
@@ -35,19 +36,19 @@ public class trafficJamController : MonoBehaviour {
 
 	private float angerLevel2Speed(float level){
 		if (level < 0) {
-			return 0;
+			return minSpeed;
 		}
 		else if (level >= 1){
 			return endSpeed;
 		}
 		else if (level >= 0 && level < sweetSpot){
-			return offsetfunction(0, 0, sweetSpot, maxSpeed, level);
+			return offsetfunction(0, minSpeed, sweetSpot, maxSpeed, level);
 		}
 		else if (level >= sweetSpot && level <= 1){
 			return offsetfunction(sweetSpot, maxSpeed, 1, endSpeed, level);
 		}
 		else{
-			return 0;
+			return minSpeed;
 		}
 	}
 
@@ -97,7 +98,7 @@ public class trafficJamController : MonoBehaviour {
 			emergency.transform.Translate (Vector3.forward * 0.3f);
             assignedPlayer.setAngerOut(angerlevel);
 			foreach(jamCar car in cars) {
-				car.moveForEmergency (emergency.transform);
+				car.moveForEmergency (emergency.transform, getJamSpeed());
 			}
 
 			assignedPlayer.moveForEmergency (emergency.transform);

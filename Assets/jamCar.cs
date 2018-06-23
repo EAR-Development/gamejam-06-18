@@ -15,8 +15,9 @@ public class jamCar : MonoBehaviour {
 
 
 	float middleXPosition;
+	float lastXPosition;
 
-	public void moveForEmergency(Transform emergencyPosition){
+	public void moveForEmergency(Transform emergencyPosition, float currentJamSpeed){
 		Vector3 currentPosition = transform.position;
 		float distance = Mathf.Abs(emergencyPosition.position.z - transform.position.z);
 		if (distance < 100) {
@@ -24,11 +25,21 @@ public class jamCar : MonoBehaviour {
 		}
 		transform.position = currentPosition;
 
+		float xDelta = currentPosition.x - lastXPosition;
+		float yDelta = currentJamSpeed;
+
+		float angle = Mathf.Rad2Deg * Mathf.Atan (xDelta / yDelta);
+
+		transform.rotation = Quaternion.Euler (new Vector3 (0, angle, 0));
+
+		lastXPosition = currentPosition.x;
+
 	}
 
 	// Use this for initialization
 	void Start () {
 		middleXPosition = transform.position.x;
+		lastXPosition = middleXPosition;
 	}
 	
 	// Update is called once per frame

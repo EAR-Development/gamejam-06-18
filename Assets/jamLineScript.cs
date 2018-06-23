@@ -8,8 +8,5 @@ public class jamLineScript : MonoBehaviour {
 		if (other.GetComponent<playerScript> () != null) {
 			other.GetComponent<playerScript>().enterTrafficJam();
 		}
-		else if (other.GetComponent<jamCar> () != null) {
-			other.GetComponent<MeshRenderer> ().enabled = true;
-		}
 	}
 }
