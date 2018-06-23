@@ -55,7 +55,7 @@ public class playerScript : MonoBehaviour {
 			playerButton = "player_1";
             pSpeed = GameObject.Find("player_1_speed");
             pMesser = GameObject.Find("Messer_1");
-            angerOut = GameObject.Find("Messer_2");
+            angerOut = GameObject.Find("Messer_1");
         } else {
 			playerButton = "player_2";
             pSpeed = GameObject.Find("player_2_speed");
@@ -180,6 +180,8 @@ public class playerScript : MonoBehaviour {
 			currentMotorPower = 0.2f;
 		}
 
+
+
 		// Move Car
 		this.transform.Translate (Vector3.forward * currentSpeed);
 	
@@ -187,4 +189,20 @@ public class playerScript : MonoBehaviour {
 
 		currentSpeed = Mathf.Max (0, currentSpeed);
 	}
+
+    public void setAngerOut(float level)
+    {
+
+        int pixel;
+
+        int relPixel = (int)Mathf.Round(level * 600f);
+        if (isPlayerOne)
+        {
+            pixel = relPixel + 30;
+        }
+        else
+        {
+            pixel = relPixel - 630;
+        }
+    }
 }
