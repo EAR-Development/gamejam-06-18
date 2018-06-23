@@ -70,7 +70,17 @@ public class playerScript : MonoBehaviour {
 	}
 
 	public void enterDragRace(){
-		currentMode = Mode.drag;
+        if (isPlayerOne)
+        {
+            GameObject.Find("player_1_speed").SetActive(true);
+            GameObject.Find("Messer_1").SetActive(true);
+        }
+        else
+        {
+            GameObject.Find("player_2_speed").SetActive(true);
+            GameObject.Find("Messer_2").SetActive(true);
+        }
+        currentMode = Mode.drag;
 		jamscript.playerLeft ();
 	}
 
