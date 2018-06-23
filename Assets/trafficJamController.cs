@@ -16,6 +16,12 @@ public class trafficJamController : MonoBehaviour {
 	private float sweetSpot = 0.7f;
 	private float honkFactor = .05f;
 
+	public GameObject emergencyPrefab;
+	public GameObject emergencySpawn;
+
+	private GameObject emergency;
+	private jamCar[] cars;
+
 	private float offsetfunction(float startx, float starty, float endx, float endy, float x){
 		float t = endy - starty;
 		float l = endx - startx;
@@ -55,6 +61,8 @@ public class trafficJamController : MonoBehaviour {
 	public void playerEnter(){
 		print("Jam start");
 		currentMode = Mode.playerinside;
+		emergency = GameObject.Instantiate (emergencyPrefab, emergencySpawn.transform.position, emergencySpawn.transform.rotation);
+		emergency.transform.parent = gameObject.transform;
 	}
 
 	public void playerLeft(){
@@ -65,7 +73,11 @@ public class trafficJamController : MonoBehaviour {
 	public float getJamSpeed(){
 		return angerLevel2Speed(angerlevel);
 	}
-	
+
+	void Start(){
+		cars = GetComponentsInChildren<jamCar> ();
+	}
+
 	// Update is called once per frame
 	void FixedUpdate () {
 		if (currentMode == Mode.playerinside) {
@@ -74,6 +86,11 @@ public class trafficJamController : MonoBehaviour {
 			print (getJamSpeed ());
 			transform.Translate (Vector3.forward * getJamSpeed());
 			nextangerlevel = angerlevel;
+			emergency.transform.Translate (Vector3.forward * 0.3f);
+
+			foreach(jamCar car in cars) {
+				car.moveForEmergency (emergency.transform);
+			}
 		}
 	}
 }
