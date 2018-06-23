@@ -29,11 +29,24 @@ public class playerScript : MonoBehaviour {
     private GameObject pSpeed;
     private GameObject pMesser;
 
-private float jamSpeed = 0.5f;
+	private float jamSpeed = 0.5f;
 
 	public Mode currentMode = Mode.start;
 
+	private float middleXPosition;
+	private bool honked;
+	int honkNumber = 0;
+
 	private float currentMotorPower = 0f;
+
+	private float offsetfunction(float startx, float starty, float endx, float endy, float x){
+		float t = endy - starty;
+		float l = endx - startx;
+
+		x = x - startx;
+
+		return (-2 * t) / (l * l * l) * (x * x * x) + (3 * t) / (l * l) * (x * x) + starty;
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -56,9 +69,8 @@ private float jamSpeed = 0.5f;
 		source.Play ();
 		source.volume = .2f;
 
-
-
-
+		jamscript.registerPlayer (GetComponent<playerScript> ());
+		middleXPosition = transform.position.x;
     }
 
 	public void enterTrafficJam(){
@@ -97,6 +109,23 @@ private float jamSpeed = 0.5f;
         player_1_time.text = Convert.ToString(ZeitStopper.Elapsed).Substring(3,9);
     }
 
+	public void moveForEmergency(Transform emergencyPosition){
+		Vector3 currentPosition = transform.position;
+		float distance = Mathf.Abs(emergencyPosition.position.z - transform.position.z);
+		if (distance < 100) {
+			currentPosition.x = middleXPosition - offsetfunction (0, 0, 100, -2, 100-distance);
+			if (honked) {
+				honkNumber++;
+				print (honkNumber);
+			}
+		}
+		transform.position = currentPosition;
+
+		if (distance < 3 && honkNumber > 10) {
+			print ("You're a Honk");
+			honkNumber = 0;
+		}
+	}
 
     void FixedUpdate(){
 		if (currentMode == Mode.drag) {
@@ -134,8 +163,10 @@ private float jamSpeed = 0.5f;
 			currentSpeed = Mathf.Max (0, jamSpeed);
 			currentMotorPower = 0.2f;
 		} else if (currentMode == Mode.jam) {
+			honked = false;
 			if (Input.GetButtonDown (playerButton)) {
 				jamscript.honk ();
+				honked = true;
 			}
 			currentSpeed = jamscript.getJamSpeed ();
 			currentMotorPower = 0.2f;
