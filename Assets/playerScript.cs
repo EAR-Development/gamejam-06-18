@@ -24,6 +24,8 @@ public class playerScript : MonoBehaviour {
     public float maximumSpeed = 20;
 	private float currentSpeed = 0;
 
+	public AudioSource source;
+
 	private float jamSpeed = 0.5f;
 
 	public Mode currentMode = Mode.start;
@@ -41,6 +43,10 @@ public class playerScript : MonoBehaviour {
         ZeitStopper.Start();
 
 		currentMode = Mode.drag;
+
+		source = GetComponentsInChildren<AudioSource>()[0];
+		source.Play ();
+		source.volume = .2f;
     }
 
 	public void enterTrafficJam(){
@@ -103,12 +109,17 @@ public class playerScript : MonoBehaviour {
 		} else if (currentMode == Mode.tunnel) {
 			currentSpeed -= 0.05f;
 			currentSpeed = Mathf.Max (0, jamSpeed);
+			currentMotorPower = 0.2f;
 		} else if (currentMode == Mode.jam) {
 			currentSpeed = jamscript.getJamSpeed ();
+			currentMotorPower = 0.2f;
 		}
 
 		// Move Car
 		this.transform.Translate (Vector3.forward * currentSpeed);
+	
+		source.pitch = currentMotorPower * 0.8f + 0.2f;
+
 		currentSpeed = Mathf.Max (0, currentSpeed);
 	}
 }
