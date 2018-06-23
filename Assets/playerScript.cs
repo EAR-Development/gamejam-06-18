@@ -10,6 +10,8 @@ using UnityEngine.UI;
 
 public class playerScript : MonoBehaviour {
 
+	public enum Mode {start, drag, jam, finish};
+
 	public bool isPlayerOne = true;
 	private string playerButton;
     public GameObject drehzahlMesser;
@@ -20,13 +22,12 @@ public class playerScript : MonoBehaviour {
     public float maximumSpeed = 20;
 	private float currentSpeed = 0;
 
-	private bool isInDragMode = true;
+	public Mode currentMode = Mode.start;
 
 	private float currentMotorPower = 0f;
 
 	// Use this for initialization
 	void Start () {
-
 		if (isPlayerOne) {
 			playerButton = "player_1";
 		} else {
@@ -34,8 +35,13 @@ public class playerScript : MonoBehaviour {
 		}
         ZeitStopper = new Stopwatch();
         ZeitStopper.Start();
-        
+
+		currentMode = Mode.drag;
     }
+
+	public void enterTrafficJam(){
+		currentMode = Mode.jam;
+	}
 
     public void stoptime()
     {
@@ -54,7 +60,7 @@ public class playerScript : MonoBehaviour {
 
 
     void FixedUpdate(){
-		if(isInDragMode){
+		if(currentMode == Mode.drag){
 			// automatic Speedup
 			currentMotorPower = Mathf.MoveTowards (currentMotorPower, 1.0f, 0.01f);
 
