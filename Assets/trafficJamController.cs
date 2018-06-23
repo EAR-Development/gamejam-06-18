@@ -6,6 +6,7 @@ public class trafficJamController : MonoBehaviour {
 	enum Mode {playeroutside, playerinside};
 	private Mode currentMode = Mode.playeroutside;
 
+
 	private float jamSpeed = 0.5f;
 
 	private float angerlevel = 0.1f;
@@ -71,6 +72,7 @@ public class trafficJamController : MonoBehaviour {
 			angerlevel = Mathf.Min (1, Mathf.Max (0, angerlevel));
 			transform.Translate (Vector3.forward * getJamSpeed());
 			nextangerlevel = angerlevel;
+            angerOut.GetComponents
 		}
 	}
 }
