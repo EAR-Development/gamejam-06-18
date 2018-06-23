@@ -55,7 +55,7 @@ public class playerScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		backMirrorCamera.SetActive (false);
+		// backMirrorCamera.SetActive (false);
 		if (isPlayerOne) {
 			playerButton = "player_1";
             pSpeed = GameObject.Find("player_1_speed");
@@ -88,7 +88,7 @@ public class playerScript : MonoBehaviour {
     }
 
 	public void enterTrafficJam(){
-		backMirrorCamera.SetActive (true);
+		// backMirrorCamera.SetActive (true);
         pSpeed.SetActive(false);
 		pMesser.SetActive(true);
         angerOut.SetActive(true);
@@ -97,7 +97,7 @@ public class playerScript : MonoBehaviour {
 	}
 
 	public void enterTunnel(){
-		backMirrorCamera.SetActive (false);
+		// backMirrorCamera.SetActive (false);
         pSpeed.SetActive(false);
         pMesser.SetActive(false);
         angerOut.SetActive(false);
@@ -107,7 +107,7 @@ public class playerScript : MonoBehaviour {
 	}
 
 	public void enterDragRace(){
-		backMirrorCamera.SetActive (false);
+		// backMirrorCamera.SetActive (false);
         pSpeed.SetActive(true);
         pMesser.SetActive(true);
         angerOut.SetActive(false);
@@ -167,11 +167,11 @@ public class playerScript : MonoBehaviour {
 
 			int pixel;
 
-			int relPixel = (int)Mathf.Round (currentMotorPower * 600f);
+			int relPixel = (int)Mathf.Round (currentMotorPower * 480f);
 			if (isPlayerOne) {
-				pixel = relPixel + 30;
+				pixel = relPixel + 10;
 			} else {
-				pixel = relPixel - 630;
+				pixel = relPixel - 510;
 			}
 
 			drehzahlMesser.GetComponent<RectTransform> ().anchoredPosition = new Vector2 (pixel, 50);
@@ -192,6 +192,9 @@ public class playerScript : MonoBehaviour {
 			}
 			currentSpeed = jamscript.getJamSpeed ();
 			currentMotorPower = 0.2f;
+		} else if (currentMode == Mode.finish) {
+			currentSpeed = 0f;
+			currentMotorPower = 0f;
 		}
 
 
@@ -209,14 +212,14 @@ public class playerScript : MonoBehaviour {
 
         int pixel;
 
-        int relPixel = (int)Mathf.Round(level * 600f);
+        int relPixel = (int)Mathf.Round(level * 480f);
         if (isPlayerOne)
         {
-            pixel = relPixel + 30;
+            pixel = relPixel + 10;
         }
         else
         {
-            pixel = relPixel - 630;
+			pixel = relPixel - 490;
         }
 
 		pMesser.GetComponent<RectTransform> ().anchoredPosition = new Vector2 (pixel, 50);
