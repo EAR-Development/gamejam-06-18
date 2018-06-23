@@ -134,6 +134,9 @@ private float jamSpeed = 0.5f;
 			currentSpeed = Mathf.Max (0, jamSpeed);
 			currentMotorPower = 0.2f;
 		} else if (currentMode == Mode.jam) {
+			if (Input.GetButtonDown (playerButton)) {
+				jamscript.honk ();
+			}
 			currentSpeed = jamscript.getJamSpeed ();
 			currentMotorPower = 0.2f;
 		}
