@@ -14,13 +14,15 @@ public class trafficJamController : MonoBehaviour {
 	private float maxSpeed = .5f;
 	private float endSpeed = 0.3f;
 	private float sweetSpot = 0.7f;
-	private float honkFactor = .2f;
+	private float honkFactor = .05f;
 
 	private float offsetfunction(float startx, float starty, float endx, float endy, float x){
 		float t = endy - starty;
 		float l = endx - startx;
 
-		return (-2 * t) / (l * l * l) * (x * x * x) + (3 * t) / (l * l) * (x * x);
+		x = x - startx;
+
+		return (-2 * t) / (l * l * l) * (x * x * x) + (3 * t) / (l * l) * (x * x) + starty;
 	}
 
 	private float angerLevel2Speed(float level){
@@ -33,7 +35,7 @@ public class trafficJamController : MonoBehaviour {
 		else if (level >= 0 && level < sweetSpot){
 			return offsetfunction(0, 0, sweetSpot, maxSpeed, level);
 		}
-		else if (sweetSpot >= 0 && level < 1){
+		else if (level >= sweetSpot && level <= 1){
 			return offsetfunction(sweetSpot, maxSpeed, 1, endSpeed, level);
 		}
 		else{
@@ -69,6 +71,7 @@ public class trafficJamController : MonoBehaviour {
 		if (currentMode == Mode.playerinside) {
 			angerlevel = nextangerlevel - 0.001f;
 			angerlevel = Mathf.Min (1, Mathf.Max (0, angerlevel));
+			print (getJamSpeed ());
 			transform.Translate (Vector3.forward * getJamSpeed());
 			nextangerlevel = angerlevel;
 		}
