@@ -6,6 +6,7 @@ public class trafficJamController : MonoBehaviour {
 	enum Mode {playeroutside, playerinside};
 	private Mode currentMode = Mode.playeroutside;
 
+
 	private float jamSpeed = 0.5f;
 
 	private float angerlevel = 0.1f;
@@ -89,7 +90,7 @@ public class trafficJamController : MonoBehaviour {
 			transform.Translate (Vector3.forward * getJamSpeed());
 			nextangerlevel = angerlevel;
 			emergency.transform.Translate (Vector3.forward * 0.3f);
-
+            assignedPlayer.setAngerOut(angerlevel);
 			foreach(jamCar car in cars) {
 				car.moveForEmergency (emergency.transform);
 			}

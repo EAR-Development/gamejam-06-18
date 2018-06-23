@@ -17,6 +17,7 @@ public class playerScript : MonoBehaviour {
 	public bool isPlayerOne = true;
 	private string playerButton;
     public GameObject drehzahlMesser;
+    public GameObject angerOut;
     public GameObject showStopwatch;
     //public float ZeitStopper = 0f;
     public Stopwatch ZeitStopper;
@@ -54,10 +55,13 @@ public class playerScript : MonoBehaviour {
 			playerButton = "player_1";
             pSpeed = GameObject.Find("player_1_speed");
             pMesser = GameObject.Find("Messer_1");
+            angerOut = GameObject.Find("Messer_1");
         } else {
 			playerButton = "player_2";
             pSpeed = GameObject.Find("player_2_speed");
             pMesser = GameObject.Find("Messer_2");
+            angerOut = GameObject.Find("Messer_2");
+
 
         }
         ZeitStopper = new Stopwatch();
@@ -74,7 +78,9 @@ public class playerScript : MonoBehaviour {
     }
 
 	public void enterTrafficJam(){
-		currentMode = Mode.jam;
+        pSpeed.SetActive(true);
+        angerOut.SetActive(true);
+        currentMode = Mode.jam;
 		jamscript.playerEnter ();
 	}
 
@@ -82,7 +88,8 @@ public class playerScript : MonoBehaviour {
         
         pSpeed.SetActive(false);
         pMesser.SetActive(false);
-        
+        angerOut.SetActive(false);
+
         currentMode = Mode.tunnel;
 		jamscript.playerLeft ();
 	}
@@ -90,6 +97,7 @@ public class playerScript : MonoBehaviour {
 	public void enterDragRace(){
         pSpeed.SetActive(true);
         pMesser.SetActive(true);
+        angerOut.SetActive(false);
         currentMode = Mode.drag;
 		jamscript.playerLeft ();
 	}
@@ -172,6 +180,8 @@ public class playerScript : MonoBehaviour {
 			currentMotorPower = 0.2f;
 		}
 
+
+
 		// Move Car
 		this.transform.Translate (Vector3.forward * currentSpeed);
 	
@@ -179,4 +189,20 @@ public class playerScript : MonoBehaviour {
 
 		currentSpeed = Mathf.Max (0, currentSpeed);
 	}
+
+    public void setAngerOut(float level)
+    {
+
+        int pixel;
+
+        int relPixel = (int)Mathf.Round(level * 600f);
+        if (isPlayerOne)
+        {
+            pixel = relPixel + 30;
+        }
+        else
+        {
+            pixel = relPixel - 630;
+        }
+    }
 }
