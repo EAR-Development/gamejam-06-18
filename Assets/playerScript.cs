@@ -18,7 +18,7 @@ public class playerScript : MonoBehaviour {
     public Stopwatch ZeitStopper;
     public Text player_1_time;
     public float maximumSpeed = 20;
-	private float currentSpeed = 0;
+	private float currentSpeed =0;
 
 	private bool isInDragMode = true;
 
@@ -43,12 +43,12 @@ public class playerScript : MonoBehaviour {
         TimeSpan ts = ZeitStopper.Elapsed;
         ZeitStopper.Stop();
         print(ts);
-        ZeitStopper.Reset();
     }
 	
 	// Update is called once per frame
 	void Update () {
-        player_1_time.text = Convert.ToString(ZeitStopper.Elapsed);
+        player_1_time.text = Convert.ToString(ZeitStopper.Elapsed).Substring(3,9);
+        
 
     }
 
