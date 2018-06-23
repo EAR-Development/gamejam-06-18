@@ -8,6 +8,12 @@ public class trafficJamController : MonoBehaviour {
 
 	private float jamSpeed = 0.5f;
 
+	private float angerlevel = 0.1f;
+
+
+	private float angerLevel2Speed(float angerLevel){
+		return 0.5f;
+	}
 
 	public void honk(){
 	}

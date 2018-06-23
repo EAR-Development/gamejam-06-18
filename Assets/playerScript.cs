@@ -69,19 +69,24 @@ public class playerScript : MonoBehaviour {
 		jamscript.playerLeft ();
 	}
 
+	public void enterDragRace(){
+		currentMode = Mode.drag;
+		jamscript.playerLeft ();
+	}
+
     public void stoptime()
     {
         print("trigger");
         TimeSpan ts = ZeitStopper.Elapsed;
         ZeitStopper.Stop();
         print(ts);
+
+		currentMode = Mode.finish;
     }
 	
 	// Update is called once per frame
 	void Update () {
         player_1_time.text = Convert.ToString(ZeitStopper.Elapsed).Substring(3,9);
-        
-
     }
 
 
