@@ -10,7 +10,7 @@ using UnityEngine.UI;
 
 public class playerScript : MonoBehaviour {
 
-	public enum Mode {start, drag, jam, finish};
+	public enum Mode {start, drag, tunnel, jam, finish};
 
 	public bool isPlayerOne = true;
 	private string playerButton;
@@ -21,6 +21,8 @@ public class playerScript : MonoBehaviour {
     public Text player_1_time;
     public float maximumSpeed = 20;
 	private float currentSpeed = 0;
+
+	private float jamSpeed = 0.5f;
 
 	public Mode currentMode = Mode.start;
 
@@ -43,6 +45,10 @@ public class playerScript : MonoBehaviour {
 		currentMode = Mode.jam;
 	}
 
+	public void enterTunnel(){
+		currentMode = Mode.tunnel;
+	}
+
     public void stoptime()
     {
         print("trigger");
@@ -60,12 +66,11 @@ public class playerScript : MonoBehaviour {
 
 
     void FixedUpdate(){
-		if(currentMode == Mode.drag){
+		if (currentMode == Mode.drag) {
 			// automatic Speedup
 			currentMotorPower = Mathf.MoveTowards (currentMotorPower, 1.0f, 0.01f);
 
-			if (Input.GetButtonDown(playerButton))
-			{
+			if (Input.GetButtonDown (playerButton)) {
 				currentMotorPower = 0.1f;
 			}
 				
@@ -76,25 +81,28 @@ public class playerScript : MonoBehaviour {
 
 			currentSpeed = Mathf.MoveTowards (currentSpeed, maximumSpeed, currentMotorPower * acceleration * 0.1f);
 
-			this.transform.Translate (Vector3.forward * currentSpeed);
 
-			currentSpeed -= 0.005f;
-			currentSpeed = Mathf.Max (0, currentSpeed);
-            int pixel;
+			int pixel;
 
-            int relPixel = (int)Mathf.Round(currentMotorPower * 600f);
-            if (isPlayerOne)
-            {
-                pixel = relPixel + 30;
-            }
-            else
-            {
-                pixel = relPixel - 630;
-            }
+			int relPixel = (int)Mathf.Round (currentMotorPower * 600f);
+			if (isPlayerOne) {
+				pixel = relPixel + 30;
+			} else {
+				pixel = relPixel - 630;
+			}
 
-            drehzahlMesser.GetComponent<RectTransform>().anchoredPosition = new Vector2(pixel, 50);
+			drehzahlMesser.GetComponent<RectTransform> ().anchoredPosition = new Vector2 (pixel, 50);
 
 			// UPDATE POSITION OF UI PIN -> currentMotorPower
+		} else if (currentMode == Mode.tunnel) {
+			currentSpeed -= 0.05f;
+			currentSpeed = Mathf.Max (0, jamSpeed);
 		}
+
+		// Move Car
+		this.transform.Translate (Vector3.forward * currentSpeed);
+
+		currentSpeed -= 0.005f;
+		currentSpeed = Mathf.Max (0, currentSpeed);
 	}
 }

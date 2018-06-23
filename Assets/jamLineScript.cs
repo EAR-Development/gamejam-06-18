@@ -5,6 +5,6 @@ using UnityEngine;
 public class jamLineScript : MonoBehaviour {
 	private void OnTriggerEnter(Collider other)
 	{
-		other.GetComponent<playerScript>().enterTrafficJam();
+		other.GetComponent<playerScript>().enterTunnel();
 	}
 }
