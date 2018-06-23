@@ -26,7 +26,10 @@ public class playerScript : MonoBehaviour {
 
 	public AudioSource source;
 
-	private float jamSpeed = 0.5f;
+    private GameObject pSpeed;
+    private GameObject pMesser;
+
+private float jamSpeed = 0.5f;
 
 	public Mode currentMode = Mode.start;
 
@@ -36,9 +39,14 @@ public class playerScript : MonoBehaviour {
 	void Start () {
 		if (isPlayerOne) {
 			playerButton = "player_1";
-		} else {
+            pSpeed = GameObject.Find("player_1_speed");
+            pMesser = GameObject.Find("Messer_1");
+        } else {
 			playerButton = "player_2";
-		}
+            pSpeed = GameObject.Find("player_2_speed");
+            pMesser = GameObject.Find("Messer_2");
+
+        }
         ZeitStopper = new Stopwatch();
         ZeitStopper.Start();
 
@@ -47,6 +55,10 @@ public class playerScript : MonoBehaviour {
 		source = GetComponentsInChildren<AudioSource>()[0];
 		source.Play ();
 		source.volume = .2f;
+
+
+
+
     }
 
 	public void enterTrafficJam(){
@@ -55,31 +67,17 @@ public class playerScript : MonoBehaviour {
 	}
 
 	public void enterTunnel(){
-        if (isPlayerOne)
-        {
-            GameObject.Find("player_1_speed").SetActive(false);
-            GameObject.Find("Messer_1").SetActive(false);
-        }
-        else
-        {
-            GameObject.Find("player_2_speed").SetActive(false);
-            GameObject.Find("Messer_2").SetActive(false);
-        }
+        
+        pSpeed.SetActive(false);
+        pMesser.SetActive(false);
+        
         currentMode = Mode.tunnel;
 		jamscript.playerLeft ();
 	}
 
 	public void enterDragRace(){
-        if (isPlayerOne)
-        {
-            GameObject.Find("player_1_speed").SetActive(true);
-            GameObject.Find("Messer_1").SetActive(true);
-        }
-        else
-        {
-            GameObject.Find("player_2_speed").SetActive(true);
-            GameObject.Find("Messer_2").SetActive(true);
-        }
+        pSpeed.SetActive(true);
+        pMesser.SetActive(true);
         currentMode = Mode.drag;
 		jamscript.playerLeft ();
 	}
