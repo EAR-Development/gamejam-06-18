@@ -6,6 +6,7 @@ public class trafficJamController : MonoBehaviour {
 	enum Mode {playeroutside, playerinside};
 	private Mode currentMode = Mode.playeroutside;
 
+
 	private float jamSpeed = 0.5f;
 
 	private float angerlevel = 0.1f;
