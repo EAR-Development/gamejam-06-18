@@ -10,7 +10,7 @@ public class tunnelLineScript : MonoBehaviour {
 			other.GetComponent<playerScript>().enterTunnel();
 		}
 		else if (other.GetComponent<jamCar> () != null) {
-			other.GetComponent<MeshRenderer> ().enabled = false;
+			other.gameObject.SetActive(false);
 		}
 		else if (other.GetComponent<emergencyCar> () != null) {
 			print ("emergency Car");
