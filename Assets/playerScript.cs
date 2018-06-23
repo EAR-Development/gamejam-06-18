@@ -180,8 +180,8 @@ public class playerScript : MonoBehaviour {
 
 			// UPDATE POSITION OF UI PIN -> currentMotorPower
 		} else if (currentMode == Mode.tunnel) {
-			currentSpeed -= 0.05f;
-			currentSpeed = Mathf.Max (0, jamSpeed);
+			currentSpeed -= 0.1f;
+			currentSpeed = Mathf.Max (jamSpeed, currentSpeed);
 			currentMotorPower = 0.2f;
 		} else if (currentMode == Mode.jam) {
 			honked = false;

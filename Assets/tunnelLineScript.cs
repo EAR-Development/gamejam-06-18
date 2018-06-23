@@ -5,6 +5,7 @@ using UnityEngine;
 public class tunnelLineScript : MonoBehaviour {
 	private void OnTriggerEnter(Collider other)
 	{
+		print ("Tunnel Trigger");
 		if (other.GetComponent<playerScript> () != null) {
 			other.GetComponent<playerScript>().enterTunnel();
 		}
