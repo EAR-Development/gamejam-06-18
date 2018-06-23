@@ -25,6 +25,8 @@ public class playerScript : MonoBehaviour {
     public float maximumSpeed = 20;
 	private float currentSpeed =0;
 
+	public GameObject backMirrorCamera;
+
 	public AudioSource source;
 	public AudioSource honksource;
 	public AudioClip honk;
@@ -53,6 +55,7 @@ public class playerScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		backMirrorCamera.SetActive (false);
 		if (isPlayerOne) {
 			playerButton = "player_1";
             pSpeed = GameObject.Find("player_1_speed");
@@ -85,6 +88,7 @@ public class playerScript : MonoBehaviour {
     }
 
 	public void enterTrafficJam(){
+		backMirrorCamera.SetActive (true);
         pSpeed.SetActive(false);
 		pMesser.SetActive(true);
         angerOut.SetActive(true);
@@ -93,7 +97,7 @@ public class playerScript : MonoBehaviour {
 	}
 
 	public void enterTunnel(){
-        
+		backMirrorCamera.SetActive (false);
         pSpeed.SetActive(false);
         pMesser.SetActive(false);
         angerOut.SetActive(false);
@@ -103,6 +107,7 @@ public class playerScript : MonoBehaviour {
 	}
 
 	public void enterDragRace(){
+		backMirrorCamera.SetActive (false);
         pSpeed.SetActive(true);
         pMesser.SetActive(true);
         angerOut.SetActive(false);
