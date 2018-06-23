@@ -1,15 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading;
+using System;
+using System.Diagnostics;
+using Debug = UnityEngine.Debug;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class playerScript : MonoBehaviour {
 
 	public bool isPlayerOne = true;
 	private string playerButton;
     public GameObject drehzahlMesser;
-
-	public float maximumSpeed = 20;
-	private float currentSpeed = 0;
+    public GameObject showStopwatch;
+    //public float ZeitStopper = 0f;
+    public Stopwatch ZeitStopper;
+    public Text player_1_time;
+    public float maximumSpeed = 20;
+	private float currentSpeed =0;
 
 	private bool isInDragMode = true;
 
@@ -23,15 +32,28 @@ public class playerScript : MonoBehaviour {
 		} else {
 			playerButton = "player_2";
 		}
-		
-	}
+        ZeitStopper = new Stopwatch();
+        ZeitStopper.Start();
+        
+    }
+
+    public void stoptime()
+    {
+        print("trigger");
+        TimeSpan ts = ZeitStopper.Elapsed;
+        ZeitStopper.Stop();
+        print(ts);
+    }
 	
 	// Update is called once per frame
 	void Update () {
+        player_1_time.text = Convert.ToString(ZeitStopper.Elapsed).Substring(3,9);
+        
 
-	}
+    }
 
-	void FixedUpdate(){
+
+    void FixedUpdate(){
 		if(isInDragMode){
 			// automatic Speedup
 			currentMotorPower = Mathf.MoveTowards (currentMotorPower, 1.0f, 0.01f);
