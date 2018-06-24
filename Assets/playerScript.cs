@@ -122,7 +122,7 @@ public class playerScript : MonoBehaviour {
         print("trigger");
         TimeSpan ts = ZeitStopper.Elapsed;
         ZeitStopper.Stop();
-        print(ts);
+		GameObject.Find("Canvas").GetComponent<endscreenScript> ().registerTime (ts, isPlayerOne);
 
 		currentMode = Mode.finish;
     }
@@ -193,7 +193,7 @@ public class playerScript : MonoBehaviour {
 			// UPDATE POSITION OF UI PIN -> currentMotorPower
 		} else if (currentMode == Mode.tunnel) {
 			currentSpeed -= 0.1f;
-			currentSpeed = Mathf.Max (jamscript.getJamSpeed(), currentSpeed);
+			currentSpeed = Mathf.Max (0.3f, currentSpeed);
 			currentMotorPower = 0.2f;
 		} else if (currentMode == Mode.jam) {
 			honked = false;
