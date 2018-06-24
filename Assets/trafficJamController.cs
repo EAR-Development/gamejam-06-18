@@ -60,6 +60,14 @@ public class trafficJamController : MonoBehaviour {
 		assignedPlayer = player;
 	}
 
+	public void newEmergency (){
+		if (emergency != null) {
+			Destroy (emergency);
+		}
+		emergency = GameObject.Instantiate (emergencyPrefab, emergencySpawn.transform.position, emergencySpawn.transform.rotation);
+		emergency.transform.parent = gameObject.transform;
+	}
+
 	public void honk(){
 		nextangerlevel = angerlevel + angerlevelToHonkEfficiency (angerlevel)*honkFactor;
 		nextangerlevel = Mathf.Min (1, Mathf.Max (0, nextangerlevel));
@@ -72,8 +80,7 @@ public class trafficJamController : MonoBehaviour {
 
 	public void playerEnter(){
 		currentMode = Mode.playerinside;
-		emergency = GameObject.Instantiate (emergencyPrefab, emergencySpawn.transform.position, emergencySpawn.transform.rotation);
-		emergency.transform.parent = gameObject.transform;
+		newEmergency ();
 	}
 
 	public void playerLeft(){
@@ -95,7 +102,7 @@ public class trafficJamController : MonoBehaviour {
 			angerlevel = Mathf.Min (1, Mathf.Max (0, angerlevel));
 			transform.Translate (Vector3.forward * getJamSpeed());
 			nextangerlevel = angerlevel;
-			emergency.transform.Translate (Vector3.forward * 0.3f);
+			emergency.transform.Translate (Vector3.forward * 0.5f);
             assignedPlayer.setAngerOut(angerlevel);
 			foreach(jamCar car in cars) {
 				car.moveForEmergency (emergency.transform, getJamSpeed());

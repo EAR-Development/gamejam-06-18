@@ -39,6 +39,7 @@ public class playerScript : MonoBehaviour {
 	public Mode currentMode = Mode.start;
 
 	private float middleXPosition;
+	float lastXPosition;
 	private bool honked;
 	int honkNumber = 0;
 
@@ -85,6 +86,7 @@ public class playerScript : MonoBehaviour {
 
 		jamscript.registerPlayer (GetComponent<playerScript> ());
 		middleXPosition = transform.position.x;
+		lastXPosition = middleXPosition;
     }
 
 	public void enterTrafficJam(){
@@ -141,6 +143,16 @@ public class playerScript : MonoBehaviour {
 		}
 		transform.position = currentPosition;
 
+		float xDelta = currentPosition.x - lastXPosition;
+		float yDelta = jamscript.getJamSpeed();
+
+		float angle = Mathf.Rad2Deg * Mathf.Atan (xDelta / yDelta);
+
+		transform.rotation = Quaternion.Euler (new Vector3 (0, angle, 0));
+
+		lastXPosition = currentPosition.x;
+
+
 		if (distance < 3 && honkNumber > 10) {
 			print ("You're a Honk");
 			jamscript.resetLevel ();
@@ -181,7 +193,7 @@ public class playerScript : MonoBehaviour {
 			// UPDATE POSITION OF UI PIN -> currentMotorPower
 		} else if (currentMode == Mode.tunnel) {
 			currentSpeed -= 0.1f;
-			currentSpeed = Mathf.Max (jamSpeed, currentSpeed);
+			currentSpeed = Mathf.Max (jamscript.getJamSpeed(), currentSpeed);
 			currentMotorPower = 0.2f;
 		} else if (currentMode == Mode.jam) {
 			honked = false;
