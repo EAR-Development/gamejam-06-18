@@ -212,7 +212,7 @@ public class playerScript : MonoBehaviour {
 
 
 		// Move Car
-		this.transform.Translate (Vector3.forward * currentSpeed);
+		this.transform.Translate (transform.InverseTransformDirection(Vector3.forward) * currentSpeed);
 	
 		source.pitch = currentMotorPower * 0.8f + 0.2f;
 

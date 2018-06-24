@@ -38,4 +38,10 @@ public class endscreenScript : MonoBehaviour {
 	public void restartGame(){
 		SceneManager.LoadScene("scenes/main");
 	}
+
+	public void FixedUpdate(){
+		if (player1set && player2set && (Input.GetButtonDown ("player_1") || Input.GetButtonDown ("player_2"))) {
+			restartGame ();
+		}
+	}
 }
