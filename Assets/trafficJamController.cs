@@ -53,7 +53,7 @@ public class trafficJamController : MonoBehaviour {
 	}
 
 	private float angerlevelToHonkEfficiency(float level){
-		return level + 0.1f;
+		return level + 0.2f;
 	}
 
 	public void registerPlayer(playerScript player){
