@@ -200,6 +200,7 @@ public class playerScript : MonoBehaviour {
 			if (Input.GetButtonDown (playerButton)) {
 				jamscript.honk ();
 				honked = true;
+				honksource.Stop ();
 				honksource.PlayOneShot (honk);
 			}
 			currentSpeed = jamscript.getJamSpeed ();
