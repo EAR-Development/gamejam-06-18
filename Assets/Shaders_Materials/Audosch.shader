@@ -6,7 +6,7 @@
 		_Metallic ("Metallic", Range(0,1)) = 0.0
 	}
 		SubShader {
-			Tags { "RenderType" = "Opaque" "Queue"="Gemometry+3" }
+			Tags { "RenderType" = "Opaque" "Queue"="Geometry+3" }
 	//		ColorMask 0
 	//		ZWrite on
 	//		Stencil{
