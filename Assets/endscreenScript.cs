@@ -44,4 +44,10 @@ public class endscreenScript : MonoBehaviour {
 			restartGame ();
 		}
 	}
+
+	void Update() {
+		if (Input.GetKey("escape"))
+			Application.Quit();
+
+	}
 }
