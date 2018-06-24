@@ -15,6 +15,7 @@ public class jamCar : MonoBehaviour {
 
 
 	float middleXPosition;
+	float initialAngle;
 	float lastXPosition;
 
 	public void moveForEmergency(Transform emergencyPosition, float currentJamSpeed){
@@ -30,7 +31,7 @@ public class jamCar : MonoBehaviour {
 
 		float angle = Mathf.Rad2Deg * Mathf.Atan (xDelta / yDelta);
 
-		transform.rotation = Quaternion.Euler (new Vector3 (0, angle, 0));
+		transform.rotation = Quaternion.Euler (new Vector3 (0, initialAngle + angle, 0));
 
 		lastXPosition = currentPosition.x;
 
@@ -40,6 +41,8 @@ public class jamCar : MonoBehaviour {
 	void Start () {
 		middleXPosition = transform.position.x;
 		lastXPosition = middleXPosition;
+
+		initialAngle = transform.rotation.eulerAngles.y;
 	}
 	
 	// Update is called once per frame

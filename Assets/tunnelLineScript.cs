@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class tunnelLineScript : MonoBehaviour {
+
+	public bool removesEmergencies = false;
+
 	private void OnTriggerEnter(Collider other)
 	{
 		if (other.GetComponent<playerScript> () != null) {
@@ -11,8 +14,7 @@ public class tunnelLineScript : MonoBehaviour {
 		else if (other.GetComponent<jamCar> () != null) {
 			other.gameObject.SetActive(false);
 		}
-		else if (other.GetComponent<emergencyCar> () != null) {
-			print ("emergency Car");
+		else if (removesEmergencies && other.GetComponent<emergencyCar> () != null) {
 			other.gameObject.SetActive(false);
 		}
 	}

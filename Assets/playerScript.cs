@@ -153,7 +153,7 @@ public class playerScript : MonoBehaviour {
 		lastXPosition = currentPosition.x;
 
 
-		if (distance < 3 && honkNumber > 10) {
+		if (distance < 3 && honkNumber > 5) {
 			print ("You're a Honk");
 			jamscript.resetLevel ();
 			honkNumber = -5;
@@ -192,7 +192,7 @@ public class playerScript : MonoBehaviour {
 
 			// UPDATE POSITION OF UI PIN -> currentMotorPower
 		} else if (currentMode == Mode.tunnel) {
-			currentSpeed -= 0.1f;
+			currentSpeed -= 0.2f;
 			currentSpeed = Mathf.Max (0.3f, currentSpeed);
 			currentMotorPower = 0.2f;
 		} else if (currentMode == Mode.jam) {
@@ -200,6 +200,7 @@ public class playerScript : MonoBehaviour {
 			if (Input.GetButtonDown (playerButton)) {
 				jamscript.honk ();
 				honked = true;
+				honksource.Stop ();
 				honksource.PlayOneShot (honk);
 			}
 			currentSpeed = jamscript.getJamSpeed ();
